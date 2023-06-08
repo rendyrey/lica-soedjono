@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "23c24848-21c8-41d6-872f-821fd9b25b68",
+		"name": "Lica",
+		"description": "All New Lica",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Data",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "licaapi",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}/api/get_result/123",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"get_result",
+						"123"
+					]
+				},
+				"description": "Get Data Hasil dari LICA"
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Data Pasien",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "licaapi",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"demografi\": {\n        \"no_rkm_medis\": \"7893238\",\n        \"nama_pasien\": \"Jaka Sep\",\n        \"tgl_lahir\": \"2019-06-29\",\n        \"jk\": \"L\",\n        \"alamat\": \"Bandung\",\n        \"no_telp\": \"0812888888\"\n    },\n    \"transaksi\": {\n        \"no_order\": \"77778\",\n        \"tgl_permintaan\": \"2020-12-14\",\n        \"jam_permintaan\": \"11:14:30\",\n        \"kode_pembayaran\": \"1\",\n        \"pembayaran\": \"BPJS\",\n        \"kode_ruangan\": \"20\",\n        \"kelas\": \"2\",\n        \"ruangan\": \"POLI UMUM\",\n        \"kode_jenis\": \"2\",\n        \"jenis\": \"Rawat Jalan\",\n        \"kode_dokter\": \"11\",\n        \"dokter\": \"Irvan\"\n    },\n    \"tes\": [\n        {\n            \"kode_jenis_tes\": \"108\",\n            \"nama_tes\": \"Methamphetamine\",\n            \"cito\": \"1\"\n        },\n        {\n            \"kode_jenis_tes\": \"229\",\n            \"nama_tes\": \"Benzodiazepine / Psikotropik\",\n            \"cito\": \"1\"\n        },\n        {\n            \"kode_jenis_tes\": \"215\",\n            \"nama_tes\": \"Morphin/Heroin Opiat Test\",\n            \"cito\": \"1\"\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{url}}/api/insert_patient",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"insert_patient"
+					]
+				},
+				"description": "Insert Data Pasien to LICA"
+			},
+			"response": []
+		},
+		{
+			"name": "Interfacing Insert",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"lists\": [\n        {\n            \"patientId\": \"20220709000\",\n            \"analyzerId\": \"2\",\n            \"results\": [\n                {\n                    \"name\": \"LYM#\",\n                    \"result\": \"21\"\n                },\n                {\n                    \"name\": \"WBC\",\n                    \"result\": \"4.21\"\n                }\n            ]\n        }\n    ]\n}"
+				},
+				"url": {
+					"raw": "{{url}}/interfacing-insert",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"interfacing-insert"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
