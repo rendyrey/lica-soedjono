@@ -2236,7 +2236,7 @@ progress {
   --bs-table-bg: transparent;
   --bs-table-accent-bg: transparent;
   --bs-table-striped-color: #181C32;
-  --bs-table-striped-bg: rgba(245, 248, 250, 0.75);
+  --bs-table-striped-bg: rgba(220, 220, 220, 0.75);
   --bs-table-active-color: #181C32;
   --bs-table-active-bg: #F5F8FA;
   --bs-table-hover-color: #181C32;
