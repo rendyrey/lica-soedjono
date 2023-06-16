@@ -409,6 +409,16 @@ Route::get('/clear-cache', function () {
     // return what you want
 });
 
+// Export Data
+Route::prefix('exports')->group(function() {
+    Route::get('patients', 'ExportImportController@patientsExport')->name('export-patient');
+});
+
+// Import Data
+Route::prefix('imports')->group(function() {
+    Route::post('patients', 'ExportImportController@patientsImport')->name('import-patient');
+});
+
 // interfacing
 Route::post('/interfacing-insert', 'InterfacingController@insert');
 Route::get('/print-barcode', 'PrinterConfigController@index');

@@ -20,6 +20,38 @@
                             <h1 class="anchor fw-bolder mb-5">
                                 Master {{ ucwords($masterData) }}</h1>
                             <!--end::Heading-->
+                                                        <!--begin::Alert-->
+                                                        <div class="alert alert-{{session('panel') ? session('panel') : ''}} d-flex align-items-center p-5 {{session('panel') ? '' : 'hidden'}}">
+                                <!--begin::Icon-->
+                                <i class="ki-duotone ki-shield-tick fs-2hx text-success me-4"><span class="path1"></span><span class="path2"></span></i>
+                                <!--end::Icon-->
+
+                                <!--begin::Wrapper-->
+                                <div class="d-flex flex-column">
+                                    <!--begin::Content-->
+                                    <span>{{session('message')}}</span>
+                                    <!--end::Content-->
+                                </div>
+                                <!--end::Wrapper-->
+                            </div>
+                            <!--end::Alert-->
+                            <!--end::Heading-->
+                            <!--begin::CRUD-->
+                            <div class="row">
+                                <div class="col">
+                                    <a href="{{ route('export-patient') }}"><button class="btn btn-primary btn-sm">Export Data</button></a>
+                                </div>
+
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-3">
+                                    <span>Import Patient Data</span>
+                                    {!! Form::open(['route' => 'import-patient', 'method' => 'post', 'class'=>'form form-horizontal', 'files' => true]) !!}
+                                        {{ Form::file('file_excel', ['class' => 'form-control form-control-sm mb-2', 'required']) }}
+                                        {{ Form::submit('Import', ['class' => 'btn btn-success btn-sm']) }}
+                                    {!! Form::close() !!}
+                                </div>
+                            </div>
                             <!--begin::CRUD-->
                             <div class="py-5">
                                 <!--begin::Wrapper-->
