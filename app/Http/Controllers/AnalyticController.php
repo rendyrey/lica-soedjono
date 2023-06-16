@@ -1270,29 +1270,28 @@ class AnalyticController extends Controller
             ->leftJoin('transactions', 'transactions.id', 'transaction_tests.transaction_id')
             ->where('transaction_tests.id', $id)->first();
         if ($checkPatient) {
-
-            $query = DB::table('finish_transaction_tests')
-                ->select('finish_transaction_tests.test_name', 'finish_transaction_tests.draw_time', 'finish_transaction_tests.result_number', 'finish_transaction_tests.result_label', 'finish_transaction_tests.result_text', 'finish_transaction_tests.global_result')
+            $model = \App\FinishTransactionTest::select('finish_transaction_tests.test_name', 'finish_transaction_tests.draw_time', 'finish_transaction_tests.result_number', 'finish_transaction_tests.result_label', 'finish_transaction_tests.result_text', 'finish_transaction_tests.global_result', 'memo_test')
                 ->leftJoin('finish_transactions', 'finish_transactions.id', 'finish_transaction_tests.finish_transaction_id')
                 ->where('finish_transaction_tests.test_id', $checkPatient->test_id)
                 ->where('finish_transactions.patient_id', $checkPatient->patient_id)
                 ->where('finish_transactions.status', '>=', AnalyticController::STATUS_POST_ANALYTIC);
-            $data = $query->get();
-
-            if ($data) {
-                foreach ($data as $key => $value) {
-                    $data[$key]->result_final = $value->global_result;
-                    $data[$key]->test_date = "-";
-                    if ($data[$key]->draw_time) {
-                        $data[$key]->test_date = date('d/m/Y', strtotime($data[$key]->draw_time));
-                    }
+            
+            return DataTables::of($model)
+            ->addIndexColumn()
+            ->addColumn('result_final', function($data) {
+                return $data->global_result;
+            })->addColumn('test_date', function($data) {
+                if ($data->draw_time) {
+                    return date('d/m/Y', strtotime($data->draw_time));
                 }
-                // dd($data);
-            }
+                return '-';
+            })
+            ->escapeColumns([])
+            ->make(true);
         }
 
 
-        return response()->json($data);
+        // return response()->json($data);
     }
 
     public function deleteTransactionTest($transactionId)

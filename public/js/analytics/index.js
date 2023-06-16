@@ -630,42 +630,38 @@ function syncDatatoServer(id){
 var loadHistoryTest = (test_id) => {
     var testHistoryColumnDatatable = [
       { data: 'test_name' },
-      { data: 'result_final' },
-      { data: 'test_date'
-      },
+      { data: 'result_final', name: 'global_result'},
+      { data: 'test_date', render: function(data, type, row){
+        return data;
+      }, name: 'draw_time'  },
+      { data: 'memo_test'}
     ];
 
     // console.log(result_array)
     var dth;
     $('#datatable_history').DataTable().destroy();
-    $.ajax({
-        type:"GET",
-        url :baseUrl('analytics/load-history-test/'+test_id),
-        success:function(jsons){
-
-            dth = $('#datatable_history').DataTable({
-                "dom": 'lrtip',
-                responsive: true,
-                deferRender:    true,
-                scrollY:        340,
-                scrollCollapse: true,
-                lengthChange:     false,
-                pageLength:     -1,
-                paging:         false,
-                info:         false,
-                language: {
-                    emptyTable: "Patient has No History",
-                    search: "_INPUT_",
-                },
-                data : jsons,
-              "columns"    : testHistoryColumnDatatable
-            });
-          
-            
-        },
-        complete:function(){
-        }
-    });
+    $('#datatable_history').DataTable({
+      "dom": 'lrtip',
+      responsive: true,
+      deferRender:    true,
+      scrollY:        340,
+      scrollCollapse: true,
+      lengthChange:     false,
+      pageLength:     -1,
+      paging:         false,
+      info:         false,
+      serverSide: true,
+      orderable: true,
+      language: {
+          emptyTable: "Patient has No History",
+          search: "_INPUT_",
+      },
+      ajax: {
+        url: baseUrl('analytics/load-history-test/'+test_id),
+      },
+      // data : jsons,
+      columns    : testHistoryColumnDatatable
+  });
 }
 
 function checkAllValidate(){

@@ -202,6 +202,7 @@
                                                 <td class="px-0">Test</td>
                                                 <td class="px-0">Result</td>
                                                 <td class="px-0">Test date</td>
+                                                <td class="px-0">Test memo</td>
                                             </tr>
                                         </thead>
                                         <tbody id="transaction-test-history-table-body">
