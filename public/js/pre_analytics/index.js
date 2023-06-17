@@ -50,7 +50,7 @@ var columnsDataTable = [
                 </svg> </span>`
     }
     return "<div>"+cito+' '+analytic+' '+igd+"</div>";
-  }, defaultContent: '', responsivePriority: 1},
+  }, defaultContent: '', responsivePriority: 1}
 ];
 
 // Datatable Component
@@ -118,7 +118,6 @@ var DatatablesServerSide = function () {
         onSelectTransaction(selectedData);
       });
   }
-
 
   // Search Datatable --- official docs reference: https://datatables.net/reference/api/search()
   var handleSearchDatatable = function () {
@@ -193,6 +192,9 @@ var DatatablesServerSide = function () {
       },
       refreshTableAjax: function(url) {
           dt.ajax.url(url).load();
+      },
+      getData: function() {
+        return dt.rows().data();
       }
   }
 }();
@@ -1955,6 +1957,48 @@ var goToAnalyticsBtn = function(transactionId) {
 
 var refreshTable = function(){
   DatatablesServerSide.refreshTable();
+}
+
+var moveToAnalytics = function() {
+  let transactions = DatatablesServerSide.getData();
+  let tableBody = '';
+  for (var i = 0; i < transactions.length; i++) {
+    let labNo = transactions[i].no_lab ? transactions[i].no_lab : '';
+    let move = transactions[i].able_to_analytics ? `<input type="checkbox" name="transaction_ids[]" class="form-check-input" value="`+transactions[i].id+`" data-transaction-id="`+transactions[i].id+`"></input>` : '<span class="text text-danger">Draw incomplete</span>'
+    tableBody += `
+      <tr>
+        <td>`+theFullDate(transactions[i].created_time)+`</td>
+        <td>`+transactions[i].transaction_id_label+`</td>
+        <td>`+labNo+`</td>
+        <td>`+transactions[i].patient.medrec+`</td>
+        <td>`+transactions[i].patient.name+`</td>
+        <td>`+transactions[i].room.room+`</td>
+        <td class='text-end'>`+move+`</td>
+      </tr>
+    `
+  }
+
+  $(".move-to-analytics-table tbody").html(tableBody);
+  $("#move-to-analytics-modal").modal('show');
+}
+
+var moveToAnalyticsBulk = function() {
+  let moveToAnalyticsForm = $("#move-to-analytics-bulk-form")
+    let formData = moveToAnalyticsForm.serialize();
+    debugger;
+    $.ajax({
+      url: baseUrl('pre-analytics/go-to-analytics-bulk'),
+      method: 'POST',
+      data: formData,
+      success: function(res) {
+          toastr.success(res.message, "Move Success!"); // give notification
+          $("#move-to-analytics-modal").modal('hide');
+          DatatablesServerSide.refreshTable();
+      },
+      error: function (request, status, error) {
+          toastr.error(request.responseJSON.message);
+      }
+    })
 }
 
 var finalCheckinBtn = function (){

@@ -52,6 +52,30 @@ class PreAnalyticController extends Controller
 
             return DataTables::of($model)
                 ->addIndexColumn()
+                ->addColumn('able_to_analytics', function($data) {
+                    $transactionId = $data->id;
+                    if ($data->status == '1') {
+                        return false;
+                    }
+        
+                    if ($data->no_lab == '' || $data->no_lab == null) {
+                        return false;
+                    }
+    
+                    $transactionTests = \App\TransactionTest::where('transaction_id', $transactionId)->get();
+    
+                    foreach ($transactionTests as $test) {
+                        if ($test->analyzer_id == null || $test->analyzer_id == '') {
+                            return false;
+                        }
+        
+                        if ($test->draw == null || $test->draw == '0') {
+                            return false;
+                        }
+                    }
+    
+                    return true;
+                })
                 ->escapeColumns([])
                 ->make(true);
         }
@@ -73,6 +97,31 @@ class PreAnalyticController extends Controller
 
         return DataTables::of($model)
             ->addIndexColumn()
+            ->addColumn('able_to_analytics', function($data) {
+                $transactionId = $data->id;
+                if ($data->status == '1') {
+                    return false;
+                }
+    
+                if ($data->no_lab == '' || $data->no_lab == null) {
+                    return false;
+                }
+
+                $transactionTests = \App\TransactionTest::where('transaction_id', $transactionId)->get();
+
+                foreach ($transactionTests as $test) {
+                    if ($test->analyzer_id == null || $test->analyzer_id == '') {
+                        return false;
+                    }
+    
+                    if ($test->draw == null || $test->draw == '0') {
+                        return false;
+                    }
+                }
+
+                return true;
+                return true;
+            })
             ->escapeColumns([])
             ->make(true);
     }
@@ -1162,6 +1211,18 @@ class PreAnalyticController extends Controller
         try {
             $now = Carbon::now();
             \App\Transaction::where('id', $request->transaction_id)->update(['status' => 1, 'analytic_time' => $now]);
+
+            return response()->json(['message' => 'Success move to analytics']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessag()], 400);
+        }
+    }
+
+    public function goToAnalyticBulk(Request $request)
+    {
+        try {
+            $now = Carbon::now();
+            \App\Transaction::whereIn('id', $request->transaction_ids)->update(['status' => 1, 'analytic_time' => $now]);
 
             return response()->json(['message' => 'Success move to analytics']);
         } catch (\Exception $e) {

@@ -22,8 +22,11 @@
                                     Pre Analytics
                                 </h1>
                                 <div>
-                                    <button type="button" id="refresh-pre-datatable" class="btn btn-light-success" onclick="refreshTable()">
+                                    <button type="button" id="refresh-pre-datatable" class="btn btn-light-success" onclick="refreshTabled()">
                                         Reload
+                                    </button>
+                                    <button type="button" id="bulk-move-to-analytics" class="btn btn-light-info" onclick="moveToAnalytics()">
+                                        Move to Analytics
                                     </button>
                                     <button type="button" class="btn btn-light-primary" data-bs-toggle="modal" data-bs-target="#add-patient-modal">
                                         Add Patient
@@ -228,6 +231,7 @@
 <!--end::Content-->
 
 @include('dashboard.pre_analytics.add-patient-modal')
+@include('dashboard.pre_analytics.move-to-analytics-modal')
 @include('dashboard.pre_analytics.edit-test-modal')
 @include('dashboard.pre_analytics.edit-patient-details-modal');
 @include('dashboard.pre_analytics.undraw-modal');
