@@ -34,19 +34,19 @@ class PostAnalyticController extends Controller
             $to = Carbon::parse($endDate)->addHours(23)->addMinutes(59)->addSeconds(59)->toDateTimeString();
         }
 
-        $model = \App\FinishTransaction::selectRaw('finish_transactions.*, finish_transactions.id as t_id')->where('post_time', '>=', $from);
+        $model = \App\FinishTransaction::selectRaw('finish_transactions.*, finish_transactions.id as t_id')->where('created_time', '>=', $from);
 
         if ($group_id != null && $group_id != "null" && $group_id != 0) {
             $model->leftJoin('finish_transaction_tests', 'finish_transaction_tests.finish_transaction_id', 'finish_transactions.id');
             $model->where('finish_transaction_tests.group_id', '=', $group_id);
         }
         // $model->where('is_igd', $is_igd); 
-        $model->where('post_time', '<=', $to);
+        $model->where('created_time', '<=', $to);
         $model->where('status', '>=', PostAnalyticController::STATUS);
         if ($group_id != null && $group_id != "null" && $group_id != 0) {
             $model->groupBy('finish_transaction_tests.finish_transaction_id');
         }
-        $model->orderBy('post_time', 'desc');
+        $model->orderBy('created_time', 'desc');
         $model->orderBy('cito', 'desc');
 
         return DataTables::of($model)

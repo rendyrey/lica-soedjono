@@ -20,7 +20,7 @@ var newFormId = '#new-pre-analytics';
 
 var buttonActionIndex = 6;
 var columnsDataTable = [
-  { data: 'post_time', render: function(data, type, row) {
+  { data: 'created_time', render: function(data, type, row) {
       return theFullDate(data);
     }
   },
