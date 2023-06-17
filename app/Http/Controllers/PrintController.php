@@ -543,6 +543,7 @@ class PrintController extends Controller
                 'transaction_tests.test_id as test_id',
                 'transaction_tests.result_status as result_status',
                 'transaction_tests.report_time',
+                'transaction_tests.validate',
                 'groups.name as group_name',
             )
             ->leftJoin('transaction_tests', 'transaction_tests.transaction_id', '=', 'transactions.id')
@@ -552,12 +553,12 @@ class PrintController extends Controller
             ->leftJoin('packages', 'transaction_tests.package_id', '=', 'packages.id')
             // ->select('created_time', 'analytic_time')
             ->where('transactions.id', $id)
-            ->where('transaction_tests.validate', 1)
+            // ->where('transaction_tests.validate', 1)
             ->orderBy('sequence', 'asc')
             ->orderBy('sub_group', 'asc');
 
         if ($group_id) {
-            $query_transaction_tests = $query_transaction_tests->where('groups.id', $group_id);
+            $query_transaction_tests = $query_transaction_tests->where('transaction_tests.group_id', $group_id);
         }
 
         $query_transaction_tests = $query_transaction_tests->get();
@@ -567,11 +568,11 @@ class PrintController extends Controller
             ->select('groups.name as group_name')
             ->leftJoin('tests', 'tests.id', '=', 'transaction_tests.test_id')
             ->leftJoin('groups', 'tests.group_id', '=', 'groups.id')
-            ->where('transaction_id', '=', $id)
-            ->where('transaction_tests.validate', 1);
+            ->where('transaction_id', '=', $id);
+            // ->where('transaction_tests.validate', 1);
 
         if ($group_id) {
-            $query_group = $query_group->where('groups.id', $group_id);
+            $query_group = $query_group->where('transaction_tests.group_id', $group_id);
         }
 
         $query_group = $query_group
@@ -583,7 +584,7 @@ class PrintController extends Controller
             ->selectRaw("CASE WHEN tests.sub_group IS NULL OR tests.sub_group = '' THEN '' ELSE tests.sub_group END as sub_group_grouped")
             ->leftJoin('tests', 'tests.id', '=', 'transaction_tests.test_id')
             ->where('transaction_id', '=', $id)
-            ->where('transaction_tests.validate', 1)
+            // ->where('transaction_tests.validate', 1)
             // ->orderBy('sequence', 'asc')
             ->groupBy('sub_group_grouped')
             ->get();
@@ -670,6 +671,9 @@ class PrintController extends Controller
             array_push($group_array[$group->group_name], $group->group_name);
             foreach ($query_subgroup as $subgroup) {
                 foreach ($tests as $test) {
+                    $test->result_status_label = '';
+                    $test->result = '';
+                    $test->normal_value = '';
                     $current_test = DB::table('tests')->where('id', $test->test_id)->first();
                     if ($query_transaction->patient_gender == "M") {
                         $raw_male = DB::raw('ranges.min_age, ranges.max_age, ranges.min_male_ref as min_ref, ranges.max_male_ref as max_ref, ranges.min_crit_male as min_crit, ranges.max_crit_male as max_crit, normal_male as normal');
@@ -688,6 +692,11 @@ class PrintController extends Controller
                             ->where('ranges.max_age', '>=', $birthday)
                             ->first();
                     }
+
+                    if(!$range) {
+                        continue;
+                    }
+
                     if ($current_test->range_type == "number") {
 
                         // dd($range);
@@ -800,7 +809,6 @@ class PrintController extends Controller
     public function printTestGroup($groupId, $id)
     {
 
-        // dd($id);
         $judul = "Print Result";
         $data['title'] = $judul;
         DB::table('transactions')
@@ -871,7 +879,7 @@ class PrintController extends Controller
             // ->select('created_time', 'analytic_time')
             ->where('transactions.id', $id)
             // ->where('transaction_tests.validate', 1)
-            ->where('groups.id', $groupId)
+            ->where('transaction_tests.group_id', $groupId)
             ->orderBy('sequence', 'asc')
             ->orderBy('sub_group', 'asc');
 
@@ -884,7 +892,7 @@ class PrintController extends Controller
             ->leftJoin('groups', 'tests.group_id', '=', 'groups.id')
             ->where('transaction_id', '=', $id)
             // ->where('transaction_tests.validate', 1)
-            ->where('groups.id', $groupId);
+            ->where('transaction_tests.group_id', $groupId);
 
         $query_group = $query_group
             ->orderBy('sequence', 'asc')
@@ -982,6 +990,9 @@ class PrintController extends Controller
             array_push($group_array[$group->group_name], $group->group_name);
             foreach ($query_subgroup as $subgroup) {
                 foreach ($tests as $test) {
+                    $test->result_status_label = "";
+                    $test->result = "";
+                    $test->normal_value = "";
                     $current_test = DB::table('tests')->where('id', $test->test_id)->first();
                     if ($query_transaction->patient_gender == "M") {
                         $raw_male = DB::raw('ranges.min_age, ranges.max_age, ranges.min_male_ref as min_ref, ranges.max_male_ref as max_ref, ranges.min_crit_male as min_crit, ranges.max_crit_male as max_crit, normal_male as normal');
@@ -1000,9 +1011,17 @@ class PrintController extends Controller
                             ->where('ranges.max_age', '>=', $birthday)
                             ->first();
                     }
+                    if(!$range) {
+                        continue;
+                    }
                     if ($current_test->range_type == "number") {
 
                         // dd($range);
+                        // if($range) {
+
+                        // } else {
+                        //     continue;
+                        // }
                         // print_r($range->min_ref);
                         if (!$range->min_ref) {
                             $min_ref_tostring = 0;
@@ -1067,6 +1086,7 @@ class PrintController extends Controller
                     } else {
                         $status = "-";
                     }
+
                     $test->result_status_label = $status;
                     if ($test->package_name == self::COVID_PACKAGE_NAME) {
                         $show_unit = 0;

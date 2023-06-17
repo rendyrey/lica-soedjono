@@ -1025,6 +1025,8 @@ class PreAnalyticController extends Controller
         foreach ($tests as $test) {
             $inputData['test_id'] = $test->test_id;
             $inputData['package_id'] = $test->package_id;
+            $inputData['type'] = $test->package_id ? 'package' : 'single';
+            $inputData['group_id'] = $test->group_id;
 
             //check have default or not
             $checkDefaultAnalyzer = \App\Analyzer::where('group_id', $test->group_id)->where('is_default', 1)->first();

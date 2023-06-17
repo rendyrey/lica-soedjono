@@ -395,12 +395,15 @@
 
             <td id="content" style="text-align: left;">
             <?php
+                echo '<i>' . ($test->validate ? '' : 'Unvalidated Test'). '</i><br>';
                 if($test->result_status_label == 'Critical'){
                     echo 'Hasil kritis dilaporkan oleh ' . $test->report_by . ' kepada ' . $test->report_to . ' (' . date('H:i', strtotime($test->report_time)) . ')' . '<br>';
                     echo '<b>' . 'Keterangan : ' . '</b>' . $test->memo_test;
                 }else{
                     echo $test->memo_test;
                 }
+
+
             
             ?>
             </td>
