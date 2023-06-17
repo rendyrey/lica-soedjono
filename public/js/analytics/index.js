@@ -309,6 +309,8 @@ var onSelectTransaction = (transactionId) => {
   // DatatableTest.init(transactionId);
   // const newUrl = baseUrl('analytics/datatable-test/'+transactionId);
   // DatatableTest.refreshTableAjax(newUrl);
+
+  loadHistoryTest(0, transactionId, true);
 }
 
 // var reportBtn = () => {
@@ -627,7 +629,7 @@ function syncDatatoServer(id){
   })
 }
 
-var loadHistoryTest = (test_id) => {
+var loadHistoryTest = (test_id = 0, transactionId = null, all_test = false) => {
     var testHistoryColumnDatatable = [
       { data: 'test_name' },
       { data: 'result_final', name: 'global_result'},
@@ -657,7 +659,7 @@ var loadHistoryTest = (test_id) => {
           search: "_INPUT_",
       },
       ajax: {
-        url: baseUrl('analytics/load-history-test/'+test_id),
+        url: baseUrl('analytics/load-history-test/'+test_id + (transactionId && '/'+transactionId) + (all_test && '/'+all_test)),
       },
       // data : jsons,
       columns    : testHistoryColumnDatatable

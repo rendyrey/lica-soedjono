@@ -132,7 +132,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('check-action-btn-test-status/{transactionId}', 'AnalyticController@checkActionBtnTestStatus');
         Route::put('go-to-post-analytics/{transactionId}', 'AnalyticController@goToPostAnalytics');
 
-        Route::get('load-history-test/{patientId}', 'AnalyticController@loadHistoryTest');
+        Route::get('load-history-test/{patientId}/{transactionId?}/{allTest?}', 'AnalyticController@loadHistoryTest');
 
         Route::delete('delete-transaction-test/{id}', 'AnalyticController@deleteTransactionTest');
         Route::post('mark-duplo', 'AnalyticController@markDuplo');
