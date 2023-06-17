@@ -860,6 +860,7 @@ class PrintController extends Controller
                 'transaction_tests.test_id as test_id',
                 'transaction_tests.result_status as result_status',
                 'transaction_tests.report_time',
+                'transaction_tests.validate',
                 'groups.name as group_name',
             )
             ->leftJoin('transaction_tests', 'transaction_tests.transaction_id', '=', 'transactions.id')
@@ -869,7 +870,7 @@ class PrintController extends Controller
             ->leftJoin('packages', 'transaction_tests.package_id', '=', 'packages.id')
             // ->select('created_time', 'analytic_time')
             ->where('transactions.id', $id)
-            ->where('transaction_tests.validate', 1)
+            // ->where('transaction_tests.validate', 1)
             ->where('groups.id', $groupId)
             ->orderBy('sequence', 'asc')
             ->orderBy('sub_group', 'asc');
@@ -882,7 +883,7 @@ class PrintController extends Controller
             ->leftJoin('tests', 'tests.id', '=', 'transaction_tests.test_id')
             ->leftJoin('groups', 'tests.group_id', '=', 'groups.id')
             ->where('transaction_id', '=', $id)
-            ->where('transaction_tests.validate', 1)
+            // ->where('transaction_tests.validate', 1)
             ->where('groups.id', $groupId);
 
         $query_group = $query_group
@@ -894,7 +895,7 @@ class PrintController extends Controller
             ->selectRaw("CASE WHEN tests.sub_group IS NULL OR tests.sub_group = '' THEN '' ELSE tests.sub_group END as sub_group_grouped")
             ->leftJoin('tests', 'tests.id', '=', 'transaction_tests.test_id')
             ->where('transaction_id', '=', $id)
-            ->where('transaction_tests.validate', 1)
+            // ->where('transaction_tests.validate', 1)
             // ->orderBy('sequence', 'asc')
             ->groupBy('sub_group_grouped')
             ->get();

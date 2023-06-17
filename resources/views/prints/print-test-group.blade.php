@@ -395,10 +395,13 @@
             <?php
                 if($test->result_status_label == 'Critical'){
                     echo 'Hasil kritis dilaporkan oleh ' . $test->report_by . ' kepada ' . $test->report_to . ' (' . date('H:i', strtotime($test->report_time)) . ')' . '<br>';
-                    echo '<b>' . 'Keterangan : ' . '</b>' . $test->memo_test;
+                    echo '<b>' . 'Keterangan : ' . '</b>' . $test->memo_test . '<br>';
+                    
                 }else{
-                    echo $test->memo_test;
+                    echo $test->memo_test . '<br>';
                 }
+
+                echo '<i>' . ($test->validate ? '' : 'Unvalidated Test'). '</i>';
             
             ?>
             </td>
