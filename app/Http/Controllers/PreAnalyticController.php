@@ -448,7 +448,7 @@ class PreAnalyticController extends Controller
         DB::beginTransaction();
         try {
             $requestData = $request->except(['_method', '_token']);
-            $requestData['created_time'] = date('Y-m-d H:i:s');
+            $requestData['created_time'] = $request->created_time.' '.date('H:i:s');
 
             if (!$request->patient_id) {
                 // create new patient if user choose the add new patient

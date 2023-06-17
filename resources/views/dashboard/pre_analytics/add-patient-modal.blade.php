@@ -207,6 +207,15 @@
                   </div>
 
                   <div class="fv-row row mb-4">
+                    <div class="col-md-3"><label class="form-label fs-7">Test Time</label></div>
+                    <div class="col-md-9">
+                      <div class="form-check form-check-custom form-check-solid">
+                      {{ Form::text('created_time', date('Y-m-d'), ['class' => 'form-control form-control-solid form-control-sm created-time req-input', 'required']) }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="fv-row row mb-4">
                     <div class="col-md-3"><label class="form-label fs-7">Diagnosis</label></div>
                     <div class="col-md-9">
                       {{ Form::textarea('diagnosis', null, ['class' => 'form-control form-control-solid', 'data-kt-autosize' => 'true', 'rows' => 3]) }}

@@ -20,7 +20,7 @@ var newFormId = '#new-pre-analytics';
 
 var buttonActionIndex = 7;
 var columnsDataTable = [
-  { data: 'created_at', render: function(data, type, row) {
+  { data: 'created_time', render: function(data, type, row) {
       return theFullDate(data);
     }
   },
@@ -1333,6 +1333,16 @@ var birthdate = () => {
   datepicker.jumpToDate(new Date(thisYear-20, 0, 1));
 }
 
+var createdTimeDatePicker;
+var createdTime = () => {
+  createdTimeDatePicker = $(".created-time").flatpickr({
+    altInput: true,
+    altFormat: 'j F Y',
+    dateFormat: 'Y-m-d',
+    static: true
+  });
+}
+
 var automaticFillPatientForm = function() {
   $(".select-patient").on('change', function (e) {
     var patientId = $(this).val();
@@ -1551,6 +1561,7 @@ var createNewData = function() {
         $("#back-btn").trigger('click'); // click back manually on stepper
         DatatablesServerSide.refreshTable();
         $("#select-room").prop('disabled', true);
+        createdTime();
     },
     error: function (request, status, error) {
         toastr.error(request.responseJSON.message);
@@ -2066,6 +2077,7 @@ document.addEventListener('DOMContentLoaded', function () {
   Select2ServerSideEditModal('doctor').init();
   Stepper();
   birthdate();
+  createdTime();
   drawAllBtnComponent();
   syncBtn();
   citoCheckin();
