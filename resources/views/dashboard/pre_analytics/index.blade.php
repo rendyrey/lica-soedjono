@@ -22,13 +22,13 @@
                                     Pre Analytics
                                 </h1>
                                 <div>
-                                    <button type="button" id="refresh-pre-datatable" class="btn btn-light-success" onclick="refreshTabled()">
+                                    <button type="button" id="refresh-pre-datatable" class="btn btn-light-success" onclick="refreshTable()">
                                         Reload
                                     </button>
                                     <button type="button" id="bulk-move-to-analytics" class="btn btn-light-info" onclick="moveToAnalytics()">
                                         Move to Analytics
                                     </button>
-                                    <button type="button" class="btn btn-light-primary" data-bs-toggle="modal" data-bs-target="#add-patient-modal">
+                                    <button type="button" class="btn btn-light-primary" data-bs-toggle="modal" data-bs-target="#add-patient-modal" id="add-patient-modal-btn">
                                         Add Patient
                                     </button>
                                 </div>

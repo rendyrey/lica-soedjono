@@ -96,6 +96,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('is-verified-test-exists/{transactionId}', 'PreAnalyticController@isVerifiedTestExist');
 
         Route::post('go-to-analytics-bulk', 'PreAnalyticController@goToAnalyticBulk');
+        Route::get('get-default-transaction', 'PreAnalyticController@getDefaultTransaction');
     });
     // END Pre Analytics
 

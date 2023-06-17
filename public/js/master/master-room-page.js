@@ -3,37 +3,37 @@ var masterData = 'room'; // required for the url
 var withModel = []; // required for the datatable if the model of the datatable has eager load or relationship, set to empty array if not.
 
 // required for the datatable columns
-var buttonActionIndex = 12;
+var buttonActionIndex = 13;
 var columnsDataTable = [
     { data: 'room' },
     { data: 'room_code' },
     { data: 'class' },
     { data: 'auto_checkin', render: function(data, type, row){
-            if (data == true) {
-                return `<i class="fas fa-check-circle mr-3 text-success small"></i>`;
-            }
-            return `<ii class="fas fa-times-circle mr-3 text-danger small"></i>`;
+        if (data == true) {
+            return `<center><i class="fas fa-check-circle mr-3 text-success small"></i></center>`;
+        }
+        return `<center><i class="fas fa-times-circle mr-3 text-danger small"></i></center>`
         }
     },
     { data: 'auto_draw', render: function(data, type, row){
-            if (data == true) {
-                return `<i class="fas fa-check-circle mr-3 text-success small"></i>`;
-            }
-            return `<ii class="fas fa-times-circle mr-3 text-danger small"></i>`;
+        if (data == true) {
+            return `<center><i class="fas fa-check-circle mr-3 text-success small"></i></center>`;
+        }
+        return `<center><i class="fas fa-times-circle mr-3 text-danger small"></i></center>`;
         }
     },
     { data: 'auto_undraw', render: function(data, type, row){
         if (data == true) {
-            return `<i class="fas fa-check-circle mr-3 text-success small"></i>`;
+            return `<center><i class="fas fa-check-circle mr-3 text-success small"></i></center>`;
         }
-        return `<ii class="fas fa-times-circle mr-3 text-danger small"></i>`;
+        return `<center><i class="fas fa-times-circle mr-3 text-danger small"></i></center>`;
         }
     },
     { data: 'auto_nolab', render: function(data, type, row){
         if (data == true) {
-            return `<i class="fas fa-check-circle mr-3 text-success small"></i>`;
+            return `<center><i class="fas fa-check-circle mr-3 text-success small"></i></center>`;
         }
-        return `<ii class="fas fa-times-circle mr-3 text-danger small"></i>`;
+        return `<center><i class="fas fa-times-circle mr-3 text-danger small"></i></center>`;
         }
     },
     { data: 'type', render: function(data, type, row) {
@@ -54,7 +54,13 @@ var columnsDataTable = [
     { data: 'referral_address' },
     { data: 'referral_no_phone' },
     { data: 'referral_email' },
-    { data: 'general_code' }
+    { data: 'general_code' },
+    { data: 'is_default', render: function(data, type, row) {
+        if (data == true) {
+            return `<center><i class="fas fa-check-circle mr-3 text-success small"></i></center>`;
+        }
+        return `<center><i class="fas fa-times-circle mr-3 text-danger small"></i></center>`;
+    }}
 ];
 
 var setValueModalEditForm = function(data)

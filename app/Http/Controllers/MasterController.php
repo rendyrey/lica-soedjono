@@ -214,7 +214,7 @@ class MasterController extends Controller
                     );
             }
 
-
+            $this->resetDefault('create', $masterData, $request);
             DB::commit(); // commit into DB if successfully created the data into masters.
             return response()->json(['message' => ucwords(str_replace("_", " ", $masterData)) . ' added successfully']);
         } catch (\Exception $e) {
@@ -419,6 +419,7 @@ class MasterController extends Controller
                 throw new \Exception($validator->errors());
             }
 
+            $this->resetDefault('update', $masterData, $request);
             // update the data in database
             $this->masters[$masterData]::findOrFail($request->id)
                 ->update($this->mapInputs($masterData, $request));
@@ -437,6 +438,21 @@ class MasterController extends Controller
             DB::rollback();
             return response()->json(['message' => $e->getMessage()], 400);
         }
+    }
+
+    private function resetDefault($action = 'create', $masterData, $request)
+    {
+        if ($masterData == 'room' || $masterData == 'insurance' || $masterData == 'doctor') {
+            if ($request->is_default) {
+                $master = $this->masters[$masterData]::where('is_default', true)->update(['is_default' => false]);
+
+                if ($action == 'create') {
+                    $this->masters[$masterData]::orderBy('id','desc')->first()->update(['is_default' => true]);
+                } else {
+                    $this->masters[$masterData]::findOrFail($request->id)->update(['is_default' => true]);
+                }
+            }
+        }   
     }
 
     /**

@@ -76,6 +76,12 @@ class PreAnalyticController extends Controller
     
                     return true;
                 })
+                ->addColumn('moved_to_analytics', function($data) {
+                    if ($data->status == PreAnalyticController::STATUS_ANALYTIC) {
+                        return true;
+                    }
+                    return false;
+                })
                 ->escapeColumns([])
                 ->make(true);
         }
@@ -121,6 +127,11 @@ class PreAnalyticController extends Controller
 
                 return true;
                 return true;
+            })->addColumn('moved_to_analytics', function($data) {
+                if ($data->status == PreAnalyticController::STATUS_ANALYTIC) {
+                    return true;
+                }
+                return false;
             })
             ->escapeColumns([])
             ->make(true);
@@ -1262,5 +1273,14 @@ class PreAnalyticController extends Controller
                 'cito' => 0
             ]);
         }
+    }
+
+    public function getDefaultTransaction()
+    {
+        $data['room'] = \App\Room::where('is_default', true)->first();
+        $data['insurance'] = \App\Insurance::where('is_default', true)->first();
+        $data['doctor'] = \App\Doctor::where('is_default', true)->first();
+
+        return response()->json($data);
     }
 }

@@ -60,6 +60,7 @@
                                         <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                             <th class="min-w-300px">Doctor Name</th>
                                             <th>General Code</th>
+                                            <th>Is Default</th>
                                             <th class="text-end min-w-100px">Actions</th>
                                         </tr>
                                     </thead>
@@ -94,6 +95,14 @@
                             <div class="mb-8">
                                 <label class="form-label fs-6">General Code</label>
                                 {{ Form::text('general_code', null, ['class' => 'form-control form-control-solid form-control-sm']) }}
+                            </div>
+                            <div class="mb-8">
+                                <div class="form-check form-check-custom form-check-solid">
+                                    {{ Form::checkbox('is_default', 1, false, ['class' => 'form-check-input', 'id' => 'set-as-default']) }}
+                                    <label class="form-check-label" for="set-as-default">
+                                        Set as Default
+                                    </label>
+                                </div>
                             </div>
                             <div class="mb-2 mt-8">
                                 {{ Form::submit('Add ' . $masterData, ['class' => 'form-control btn btn-light-success']) }}
@@ -138,6 +147,14 @@
             <div class="mb-8">
                 <label class="form-label fs-6">General Code</label>
                 {{ Form::text('general_code', null, ['class' => 'form-control form-control-solid form-control-sm']) }}
+            </div>
+            <div class="mb-8">
+                <div class="form-check form-check-custom form-check-solid">
+                    {{ Form::checkbox('is_default', 1, false, ['class' => 'form-check-input', 'id' => 'set-as-default-edit']) }}
+                    <label class="form-check-label" for="set-as-default-edit">
+                        Set as Default
+                    </label>
+                </div>
             </div>
             <div class="mb-2 mt-8">
                 {{ Form::submit('Update ' . $masterData, ['class' => 'form-control btn btn-light-success']) }}

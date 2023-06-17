@@ -176,7 +176,7 @@
                   <div class="fv-row row mb-4">
                     <div class="col-md-3"><label class="form-label fs-7">Type</label></div>
                     <div class="col-md-9">
-                      {{ Form::select('type', array_replace(Helper::roomType(),['' => '']), null, ['class' => 'form-select form-select-sm form-select-solid select-two req-input', 'data-control' => 'select2', 'data-placeholder' => 'Select type', 'data-hide-search' => 'true', 'id' => 'select-type']) }}
+                      {{ Form::select('type', array_replace(Helper::roomType(),['' => '']), null, ['class' => 'form-select form-select-sm form-select-solid select-two req-input select-room-type', 'data-control' => 'select2', 'data-placeholder' => 'Select type', 'data-hide-search' => 'true', 'id' => 'select-type']) }}
                     </div>
                   </div>
 

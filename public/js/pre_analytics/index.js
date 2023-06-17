@@ -738,6 +738,7 @@ function drawSpecimenChange(transactionId, specimenId, event) {
         transactionSpecimenTable.ajax.url(baseUrl('pre-analytics/transaction-specimen/'+transactionId+'/datatable')).load();
         checkSpecimenDrawStatus(transactionId);
         goToAnalyticsBtn(transactionId);
+        DatatablesServerSide.refreshTable();
       },
       error: function(request, status, error) {
         toastr.error(request.responseJSON.message);
@@ -783,6 +784,7 @@ function drawSpecimenChange(transactionId, specimenId, event) {
               transactionSpecimenTable.ajax.url(baseUrl('pre-analytics/transaction-specimen/'+transactionId+'/datatable')).load();
               checkSpecimenDrawStatus(transactionId);
               goToAnalyticsBtn(transactionId);
+              DatatablesServerSide.refreshTable();
             },
             error: function(request, status, error) {
               toastr.error(request.responseJSON.message);
@@ -811,6 +813,7 @@ var drawAllBtnComponent = function() {
         transactionSpecimenTable.ajax.url(baseUrl('pre-analytics/transaction-specimen/'+transactionId+'/datatable')).load();
         checkSpecimenDrawStatus(transactionId);
         goToAnalyticsBtn(transactionId);
+        DatatablesServerSide.refreshTable();
       }
     });
   });
@@ -848,7 +851,7 @@ var drawAllBtnComponent = function() {
               transactionSpecimenTable.ajax.url(baseUrl('pre-analytics/transaction-specimen/'+transactionId+'/datatable/')).load();
               checkSpecimenDrawStatus(transactionId);
               goToAnalyticsBtn(transactionId);
-
+              DatatablesServerSide.refreshTable();
             }
           });
         }
@@ -865,6 +868,7 @@ var drawAllBtnComponent = function() {
         transactionSpecimenTable.ajax.url(baseUrl('pre-analytics/transaction-specimen/'+transactionId+'/datatable/')).load();
         checkSpecimenDrawStatus(transactionId);
         goToAnalyticsBtn(transactionId);
+        DatatablesServerSide.refreshTable();
       }
     });
   });
@@ -1104,7 +1108,6 @@ var Select2ServerSideModal = function (theData, searchKey = 'name', params) {
                     })
                 };
               },
-              cache: true
           },
           escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
           // minimumInputLength: 0,
@@ -1960,11 +1963,15 @@ var refreshTable = function(){
 }
 
 var moveToAnalytics = function() {
+  DatatablesServerSide.refreshTable();
   let transactions = DatatablesServerSide.getData();
   let tableBody = '';
   for (var i = 0; i < transactions.length; i++) {
     let labNo = transactions[i].no_lab ? transactions[i].no_lab : '';
     let move = transactions[i].able_to_analytics ? `<input type="checkbox" name="transaction_ids[]" class="form-check-input" value="`+transactions[i].id+`" data-transaction-id="`+transactions[i].id+`"></input>` : '<span class="text text-danger">Draw incomplete</span>'
+    if (transactions[i].moved_to_analytics) {
+      move = '<span class="text text-success">Moved to Analytics</span>';
+    }
     tableBody += `
       <tr>
         <td>`+theFullDate(transactions[i].created_time)+`</td>
@@ -1985,7 +1992,7 @@ var moveToAnalytics = function() {
 var moveToAnalyticsBulk = function() {
   let moveToAnalyticsForm = $("#move-to-analytics-bulk-form")
     let formData = moveToAnalyticsForm.serialize();
-    debugger;
+
     $.ajax({
       url: baseUrl('pre-analytics/go-to-analytics-bulk'),
       method: 'POST',
@@ -2101,6 +2108,29 @@ var finalCheckinBtn = function (){
   });
 }
 
+var setDefaultTransaction = function() {
+  $("#add-patient-modal-btn").on('click', function() {
+    $.ajax({
+      url: baseUrl('pre-analytics/get-default-transaction'),
+      type: 'GET',
+      success: function(res) {
+        var selectedInsurance = new Option(res.insurance.name, res.insurance.id, false, true);
+        var selectedRoom = new Option(res.room.room, res.room.id, false, true);
+        var selectedDoctor = new Option(res.doctor.name, res.doctor.id, false, true);
+
+        $("select.select-room-type").val(res.room.type).trigger('change');
+        $("select.select-insurance").append(selectedInsurance).trigger('change');
+        $("select.select-room").append(selectedRoom).trigger('change');
+        $("select.select-doctor").append(selectedDoctor).trigger('change');
+      },
+      error: function (request, status, error) {
+  
+      }
+    })
+  });
+ 
+}
+
 
 // On document ready
 document.addEventListener('DOMContentLoaded', function () {
@@ -2131,6 +2161,7 @@ document.addEventListener('DOMContentLoaded', function () {
   newPatientMedrec();
   editPatientDetails();
   selectType();
+  setDefaultTransaction();
 
   $(".patient-form label").addClass('text-muted');
 

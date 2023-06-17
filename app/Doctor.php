@@ -9,7 +9,8 @@ class Doctor extends Model
 {
     protected $fillable = [
         'name',
-        'general_code'
+        'general_code',
+        'is_default'
     ];
 
     public static function validate($request)

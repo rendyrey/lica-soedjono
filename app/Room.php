@@ -27,7 +27,8 @@ class Room extends Model
         'referral_address',
         'referral_no_phone',
         'referral_email',
-        'general_code'
+        'general_code',
+        'is_default',
     ];
 
     public static function validate($request)

@@ -3,14 +3,20 @@ var masterData = 'insurance'; // required for the url
 var withModel = []; // required for the datatable if the model of the datatable has eager load or relationship, set to empty array if not.
 
 // required for the datatable columns
-var buttonActionIndex = 3;
+var buttonActionIndex = 4;
 var columnsDataTable = [
     { data: 'name' },
     { data: 'discount' , render: function(data, type, row){
             return data + "%";
         }
     },
-    { data: 'general_code' }
+    { data: 'general_code' },
+    { data: 'is_default', render: function(data, type, row) {
+        if (data == true) {
+            return `<i class="fas fa-check-circle mr-3 text-success small"></i>`;
+        }
+        return `<i class="fas fa-times-circle mr-3 text-danger small"></i>`;
+    }}
 ];
 
 var setValueModalEditForm = function(data)
