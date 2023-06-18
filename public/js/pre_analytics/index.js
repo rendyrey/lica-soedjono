@@ -354,7 +354,8 @@ var DatatableTestServerSide = function () {
             // handleResetForm();
         },
         refreshTable: function() {
-            dt.ajax.reload();
+          dt.ajax.reload();
+          dt.search('').draw();
         },
         refreshNewTable: function(url) {
           dt.ajax.url(url).load();
@@ -1567,6 +1568,7 @@ var createNewData = function() {
         DatatablesServerSide.refreshTable();
         $("#select-room").prop('disabled', true);
         createdTime();
+        DatatableTestServerSide.refreshTable();
     },
     error: function (request, status, error) {
         toastr.error(request.responseJSON.message);
