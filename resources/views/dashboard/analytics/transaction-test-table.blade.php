@@ -304,7 +304,7 @@ foreach ($table as $key => $value) {
         const transactionTestId = $(this).data('transaction-test-id');
         const transactionId = $(this).data('transaction-id');
         const component = $(this);
-        if (current_result != value && value != '') {
+        if (current_result != value) {
             $.ajax({
                 url: baseUrl('analytics/update-result-number/' + transactionTestId),
                 type: 'put',
