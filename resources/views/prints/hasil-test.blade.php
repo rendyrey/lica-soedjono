@@ -301,7 +301,7 @@
             <?php $group_test = $test->group_name; ?>
 
             <tr id="content">
-                <td style="padding-left:15px; padding-bottom: 5px;"><span style="font-size:10px; font-style: italic; font-weight: bold">{{ $test->group_name }}</span></td>
+                <td style="padding-left:15px; padding-bottom: 5px; padding-top: 0.5rem"><span style="font-size:10px; font-style: italic; font-weight: bold">{{ $test->group_name }}</span></td>
                 <td></td>
                 <td></td>
                 <td></td>

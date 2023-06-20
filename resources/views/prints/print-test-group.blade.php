@@ -174,7 +174,7 @@
     <table id="tb_result" width="100%" style="border-bottom: 1px solid black">
         <thead>
             <tr>
-                <th class="border-bottom" id="content" style="text-align: left; padding-left:15px; width:25%;">JENIS PEMERIKSAANfff</th>
+                <th class="border-bottom" id="content" style="text-align: left; padding-left:15px; width:25%;">JENIS PEMERIKSAAN</th>
                 <th class="border-bottom" id="content" style="width:5%;"></th>
                 <th class="border-bottom" id="content" style="text-align: left; width:15%;">HASIL</th>
                 <th class="border-bottom" id="content" style="text-align: left; width:20%;">NILAI RUJUKAN</th>
@@ -286,7 +286,7 @@
     <hr style="border: 1px solid black">
     <table id="tb_result" width="100%" style="border-bottom: 1px solid black;">
         <tr>
-            <th class="border-bottom" id="content" style="text-align: left; padding-left:15px; width:25%;">JENIS PEMERIKSAANxxx</th>
+            <th class="border-bottom" id="content" style="text-align: left; padding-left:15px; width:25%;">JENIS PEMERIKSAAN</th>
             <th class="border-bottom" id="content" style="width:5%;"></th>
             <th class="border-bottom" id="content" style="text-align: left; width:15%;">HASIL</th>
             <th class="border-bottom" id="content" style="text-align: left; width:20%;">NILAI RUJUKAN</th>

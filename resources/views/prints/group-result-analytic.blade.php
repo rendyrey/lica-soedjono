@@ -101,7 +101,7 @@
                         <img src="{{asset('images/logo-diponegoro.png')}}" style="margin-left: 0px; width: 85%; height: 85%">
                     </div>
                 </td>
-                <td width="67%" style="margin-top:-15px;">
+                <td width="67%">
                     <p style="font-size: 28px;text-align: center;"><b>LABORATORIUM KLINIK</b></p>
                     <p style="font-size: 30px;text-align: center;"><b>RUMKIT TK II dr. SOEDJONO</b></p>
                     <p style="font-size: 24px;text-align: center;"><b>MAGELANG</b></p>
@@ -206,7 +206,7 @@
         </tbody>
     </table>
     <?php $page++; ?>
-    <div id="header" class="page-break">
+    <div id="header" class="page-break" style="margin-top:0.2rem">
         <table>
             <tr>
                 <td width="15%">
@@ -214,7 +214,7 @@
                         <img src="{{asset('images/logo-diponegoro.png')}}" style="margin-left: 0px; width: 85%; height: 85%">
                     </div>
                 </td>
-                <td width="67%" style="margin-top:-15px;">
+                <td width="67%">
                     <p style="font-size: 28px;text-align: center;"><b>LABORATORIUM KLINIK</b></p>
                     <p style="font-size: 30px;text-align: center;"><b>RUMKIT TK II dr. SOEDJONO</b></p>
                     <p style="font-size: 24px;text-align: center;"><b>MAGELANG</b></p>
@@ -300,7 +300,7 @@
         <?php $group_test = $test->group_name; ?>
 
         <tr id="content">
-            <td style="padding-left:15px; padding-bottom: 5px;"><span style="font-size:10px; font-style: italic; font-weight: bold">{{ $test->group_name }}</span></td>
+            <td style="padding-left:15px; padding-bottom: 5px; padding-top: 0.5rem"><span style="font-size:10px; font-style: italic; font-weight: bold">{{ $test->group_name }}FAF</span></td>
             <td></td>
             <td></td>
             <td></td>
@@ -316,7 +316,7 @@
         <?php $package_name = $test->package_name; ?>
 
         <tr id="content">
-            <td style="padding-left:15px; padding-bottom: 5px;"><span style="font-size:10px; font-weight: bold">{{ $test->package_name }}</span></td>
+            <td style="padding-left:15px; padding-bottom: 5px;"><span style="font-size:10px; font-weight: bold">{{ $test->package_name }}rere</span></td>
             <td></td>
             <td></td>
             <td></td>
