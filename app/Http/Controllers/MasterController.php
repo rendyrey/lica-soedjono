@@ -272,17 +272,13 @@ class MasterController extends Controller
                 $checkPackageTest = DB::table('package_tests')->where('test_id', $test_id)->first();
                 
                 if ($checkPackageTest) {
-                    foreach($package_data as $package_id){
-                        if($checkPackageTest->package_id == $package_id){
-                            $data[] = [
-                                'test_id' => $test_id,
-                                'grand_package_id' => $createdData->id,
-                                'package_id' => $package_id,
-                                'created_at' => $currentTime,
-                                'updated_at' => $currentTime
-                            ];
-                        }
-                    }
+                    $data[] = [
+                        'test_id' => $test_id,
+                        'grand_package_id' => $createdData->id,
+                        'package_id' => $checkPackageTest->package_id,
+                        'created_at' => $currentTime,
+                        'updated_at' => $currentTime
+                    ];
                 } else {
                     $data[] = [
                         'test_id' => $test_id,

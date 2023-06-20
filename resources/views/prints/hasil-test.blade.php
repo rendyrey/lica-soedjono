@@ -94,7 +94,7 @@
 
 <body>
 
-        <div id="header">
+        <div id="header" style="margin-top:1rem">
             <table>
                 <tr>
                     <td width="15%">
@@ -207,7 +207,7 @@
             </tbody>
         </table>
         <?php $page++; ?>
-        <div id="header" class="page-break">
+        <div id="header" class="page-break" style="margin-top:1rem">
             <table>
                 <tr>
                     <td width="15%">
